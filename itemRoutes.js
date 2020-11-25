@@ -9,7 +9,7 @@ router.get('/', (request, response) => {
 router.post('/', (request, response) => {
     const newItem = request.body;
     items.push(newItem);
-    return response.json({ added: newItem });
+    return response.status(201).json({ added: newItem });
 });
 
 router.get('/:name', (request, response) => {
@@ -18,6 +18,7 @@ router.get('/:name', (request, response) => {
             return response.json(item);
         }
     }
+    return response.status(404).json({ message: `${request.params.name} not found!` });
 });
 
 router.patch('/:name', (request, response) => {
@@ -32,6 +33,7 @@ router.patch('/:name', (request, response) => {
             return response.json({ updated: items[i] });
         }
     }
+    return response.status(404).json({ message: `${request.params.name} not found!` });
 });
 
 router.delete('/:name', (request, response) => {
@@ -41,6 +43,7 @@ router.delete('/:name', (request, response) => {
             return response.json({ message: 'deleted' });
         }
     }
+    return response.status(404).json({ message: `${request.params.name} not found!` });
 });
 
 module.exports = router;
